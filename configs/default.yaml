@@ -45,14 +45,14 @@ actor_critic:
   critic_hidden: [256, 256]
   gamma: 0.99
   lambda_: 0.95
-  entropy_scale: 3e-4
-  actor_lr: 3e-5
-  critic_lr: 3e-5
+  entropy_scale: 0.0003
+  actor_lr: 0.00003
+  critic_lr: 0.00003
   grad_clip: 100.0
 
 optimizer:
-  lr: 1e-4
-  eps: 1e-8
+  lr: 0.0001
+  eps: 0.00000001
   grad_clip: 1000.0
 
 training:
@@ -65,10 +65,10 @@ training:
   log_every: 1000
   eval_every: 10000
   checkpoint_every: 25000
-  device: "cpu"
+  device: "cuda"
 
 maml:
   inner_lr: 0.01
   inner_steps: 5
   meta_batch_size: 4
-  outer_lr: 1e-4
+  outer_lr: 0.0001
