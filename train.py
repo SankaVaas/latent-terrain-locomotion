@@ -225,7 +225,7 @@ def main():
     t0 = time.time()
 
     # Training loop: collect 1 episode → train train_ratio steps
-    max_steps = 500_000  # adjust for T4 session length
+    max_steps = 50_000  # adjust for T4 session length
 
     while global_step < max_steps:
 
