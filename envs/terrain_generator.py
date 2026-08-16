@@ -32,20 +32,31 @@ def _generate_height_field(size, height_scale, freq, seed, num_octaves=4):
     total_amp = 0.0
     for octave in range(num_octaves):
         amp = 0.5 ** octave
-        gx = max(2, int(size * freq * (2**octave) / size * 4))
+        gx = max(2, int(max(2, freq * (2**octave)) * 4))
         grad = rng.standard_normal((gx+1, gx+1, 2)).astype(np.float32)
         xs = np.linspace(0, gx, size, endpoint=False)
-        xi = xs.astype(int); xf = xs - xi
+        ys = np.linspace(0, gx, size, endpoint=False)
+        xi = np.clip(xs.astype(int), 0, gx-1)
+        yi = np.clip(ys.astype(int), 0, gx-1)
+        xf = xs - xi
+        yf = ys - yi
         u = xf*xf*(3-2*xf)
-        xi = np.clip(xi, 0, gx-1)
-        def dg(gxi, gyi, dx, dy):
-            g = grad[gxi, gyi]; return g[0]*dx + g[1]*dy
-        n00=dg(xi,xi,xf,xf); n10=dg(xi+1,xi,xf-1,xf)
-        n01=dg(xi,xi+1,xf,xf-1); n11=dg(xi+1,xi+1,xf-1,xf-1)
-        u2=u[:,None]; v2=u[None,:]
-        ix0=n00[:,None]+u2*(n10[:,None]-n00[:,None])
-        ix1=n01[:,None]+u2*(n11[:,None]-n01[:,None])
-        heights += amp*(ix0+v2*(ix1-ix0))
+        v = yf*yf*(3-2*yf)
+        # grad lookups: shape (size,2) then dot with offset scalars
+        g00 = grad[xi, yi]        # (size, 2)
+        g10 = grad[np.clip(xi+1,0,gx-1), yi]
+        g01 = grad[xi, np.clip(yi+1,0,gx-1)]
+        g11 = grad[np.clip(xi+1,0,gx-1), np.clip(yi+1,0,gx-1)]
+        # dot products: shape (size,)
+        n00 = g00[:,0]*xf       + g00[:,1]*yf
+        n10 = g10[:,0]*(xf-1)   + g10[:,1]*yf
+        n01 = g01[:,0]*xf       + g01[:,1]*(yf-1)
+        n11 = g11[:,0]*(xf-1)   + g11[:,1]*(yf-1)
+        # interpolate over 2D grid
+        u2 = u[:,None]; v2 = v[None,:]
+        ix0 = n00[:,None] + u2*(n10[:,None]-n00[:,None])
+        ix1 = n01[:,None] + u2*(n11[:,None]-n01[:,None])
+        heights += amp*(ix0 + v2*(ix1-ix0))
         total_amp += amp
     heights /= (total_amp+1e-8)
     heights *= height_scale

@@ -2,8 +2,8 @@ import os, math
 import numpy as np
 import pybullet as p
 import pybullet_data
-import gym
-from gym import spaces
+import gymnasium as gym
+from gymnasium import spaces
 from typing import Optional, Tuple
 from envs.terrain_generator import TerrainGenerator, TERRAIN_REGISTRY
 
