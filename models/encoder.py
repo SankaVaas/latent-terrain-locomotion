@@ -180,7 +180,8 @@ class TerrainEncoder(nn.Module):
             z_terrain: (..., terrain_latent_dim)
         """
         probes = obs[..., 33:49]   # last 16 dims — terrain probe heights
-        return self.encoder(probes)
+        z = self.encoder(probes)
+        return F.normalize(z, dim=-1)
 
     def encode_probes(self, probes: Tensor) -> Tensor:
         """
@@ -190,7 +191,7 @@ class TerrainEncoder(nn.Module):
         Returns:
             z_terrain: (..., terrain_latent_dim)
         """
-        return self.encoder(probes)
+        return F.normalize(self.encoder(probes), dim=-1)
 
     # ── Auxiliary loss 1: classification ──────────────────────────────────
 

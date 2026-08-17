@@ -151,8 +151,8 @@ class WorldModel(nn.Module):
         self.grad_clip = opt_cfg.get("grad_clip", 1000.0)
 
         # Loss weights for auxiliary terrain losses
-        self.classify_weight    = 0.1
-        self.contrastive_weight = 0.1
+        self.classify_weight    = 0.5
+        self.contrastive_weight = 0.5
 
         self.to(device)
 
