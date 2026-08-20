@@ -33,7 +33,7 @@ world_model:
   latent_dim: 256
   stoch_dim: 32
   stoch_classes: 32
-  terrain_latent_dim: 32
+  terrain_latent_dim: 64
   encoder_hidden: [256, 256]
   decoder_hidden: [256, 256]
   imagine_horizon: 15
