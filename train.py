@@ -131,7 +131,7 @@ def main():
 
     tr_cfg = cfg["training"]
     collect_steps    = tr_cfg.get("collect_steps", 5000)
-    batch_size       = tr_cfg.get("batch_size", 16)
+    batch_size       = tr_cfg.get("batch_size", 32)
     batch_length     = tr_cfg.get("batch_length", 64)
     train_ratio      = tr_cfg.get("train_ratio", 512)
     replay_capacity  = tr_cfg.get("replay_capacity", 500_000)
