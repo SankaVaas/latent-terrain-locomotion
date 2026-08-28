@@ -27,6 +27,7 @@ def parse_args():
     p.add_argument("--iterations",  type=int, default=100)
     p.add_argument("--inner_steps", type=int, default=5)
     p.add_argument("--save",        default="checkpoints/maml_final.pt")
+    p.add_argument("--episodes",    type=int, default=1)
     return p.parse_args()
 
 
@@ -84,6 +85,7 @@ def main():
         device=device,
         n_meta_iterations=args.iterations,
         save_path=args.save,
+        episodes_per_task=args.episodes, 
     )
 
     # ── Plot meta-loss curve ───────────────────────────────────────────────

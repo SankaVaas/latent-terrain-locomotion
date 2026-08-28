@@ -67,7 +67,7 @@ training:
   device: "cuda"
 
 maml:
-  inner_lr: 0.01
+  inner_lr: 0.0001
   inner_steps: 5
   meta_batch_size: 4
-  outer_lr: 0.0001
+  outer_lr: 0.00001

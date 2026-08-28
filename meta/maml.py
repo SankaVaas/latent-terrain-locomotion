@@ -55,6 +55,7 @@ import numpy as np
 from torch import Tensor
 from typing import Dict, List, Tuple, Optional
 import copy
+import gc
 
 try:
     import higher
@@ -333,7 +334,12 @@ class MAMLTrainer:
                 device=self.device,
                 batch_size=4,
             )
-            task_losses.append(query_loss)
+            task_losses.append(query_loss.detach().item())
+            del actor_copy
+            gc.collect()
+
+            task_losses_tensors.append(query_loss)     
+            task_losses_floats.append(query_loss.item())
 
         if not task_losses:
             return {"meta_loss": 0.0}
@@ -358,6 +364,11 @@ class MAMLTrainer:
 
         nn.utils.clip_grad_norm_(self.actor.parameters(), 10.0)
         self.meta_optimizer.step()
+
+        del tasks
+        for _ in range(3):
+            gc.collect()
+        torch.cuda.empty_cache()
 
         return {
             "meta_loss": meta_loss.item(),
