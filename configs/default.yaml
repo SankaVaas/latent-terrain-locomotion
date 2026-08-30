@@ -28,6 +28,10 @@ terrains:
     friction: 0.6
     restitution: 0.05
     damping: 1.5
+  regolith_mild:
+    friction: 0.6
+    restitution: 0.15
+    damping: 0.6
 
 world_model:
   latent_dim: 256
@@ -56,11 +60,12 @@ optimizer:
   grad_clip: 1000.0
 
 training:
+  seed: 42
   collect_steps: 2000
   batch_size: 32
   batch_length: 32
   train_ratio: 64
-  replay_capacity: 100000
+  replay_capacity: 300000
   log_every: 500
   eval_every: 5000
   checkpoint_every: 10000
