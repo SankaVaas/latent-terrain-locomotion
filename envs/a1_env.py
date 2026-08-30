@@ -158,10 +158,10 @@ class A1Env(gym.Env):
         blv, bav = p.getBaseVelocity(self._robot_id, physicsClientId=self._client)
         R = np.array(p.getMatrixFromQuaternion(born)).reshape(3,3)
         v_fwd = float((R.T @ np.array(blv))[0])
-        r = (1.5*v_fwd - 0.1*float(bav[2])**2
-             - 1e-5*float(np.sum(action**2))
-             - 1e-4*float(np.sum((action-self._prev_action)**2))
-             + 0.2 + (-10.0 if self._is_fallen() else 0.0))
+        r = (3.0*v_fwd - 0.1*float(bav[2])**2
+            - 1e-5*float(np.sum(action**2))
+            - 1e-4*float(np.sum((action-self._prev_action)**2))
+            + 0.05 + (-10.0 if self._is_fallen() else 0.0))
         return float(r), {"v_forward": v_fwd}
 
     def _is_fallen(self):
@@ -169,4 +169,4 @@ class A1Env(gym.Env):
         if bpos[2] < 0.18:
             return True
         e = p.getEulerFromQuaternion(born)
-        return abs(e[0]) > 0.8 or abs(e[1]) > 0.8
+        return abs(e[0]) > 1.0 or abs(e[1]) > 1.0

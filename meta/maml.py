@@ -206,7 +206,7 @@ def run_maml_training(
     n_meta_iterations=100, episodes_per_task=1,
     save_path="checkpoints/maml_final.pt",
 ):
-    META_TRAIN_TERRAINS = ["flat", "sand", "ice", "rock"]
+    META_TRAIN_TERRAINS = ["flat", "sand", "ice", "rock", "regolith_mild"]
 
     maml = MAMLTrainer(world_model=world_model, actor=actor, critic=critic,
                        cfg=cfg, device=device)

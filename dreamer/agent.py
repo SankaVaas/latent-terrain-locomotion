@@ -180,7 +180,7 @@ class ReplayBuffer:
 # ── Data collection ───────────────────────────────────────────────────────────
 
 TERRAIN_NAME_TO_ID = {
-    "flat": 0, "sand": 1, "ice": 2, "rock": 3, "regolith": 4
+    "flat": 0, "sand": 1, "ice": 2, "rock": 3, "regolith_mild": 4, "regolith": 4
 }
 
 

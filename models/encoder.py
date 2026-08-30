@@ -179,7 +179,8 @@ class TerrainEncoder(nn.Module):
         Returns:
             z_terrain: (..., terrain_latent_dim)
         """
-        probes = obs[..., 33:49]   # last 16 dims — terrain probe heights
+
+        probes = obs[..., 33:49]
         z = self.encoder(probes)
         return F.normalize(z, dim=-1)
 

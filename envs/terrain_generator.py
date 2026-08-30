@@ -23,6 +23,7 @@ TERRAIN_REGISTRY = {
     "ice":  TerrainConfig("ice",  0.05,0.001,0.001,0.8, 0.02,2e4, 0.01, 0.5),
     "rock": TerrainConfig("rock", 1.0, 0.03, 0.03, 0.7, 0.05,3e4, 0.12, 4.0),
     "regolith": TerrainConfig("regolith",0.6,0.08,0.08,0.05,1.5,2e3,0.06,3.0),
+    "regolith_mild": TerrainConfig("regolith_mild",0.6,0.05,0.05,0.15,0.6,4e3,0.04,2.5),
 }
 
 

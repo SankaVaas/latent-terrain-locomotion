@@ -105,13 +105,16 @@ def get_terrain_curriculum(step: int) -> list:
     Terrain curriculum — gradually introduce harder terrains.
     flat only → + sand/ice → + rock/regolith
     """
-    if step < 20_000:
+    if step < 10_000:
         return ["flat"]
-    elif step < 50_000:
+    elif step < 30_000:
         return ["flat", "sand", "ice"]
-    else:
+    elif step < 80_000:
         return ["flat", "sand", "ice", "rock"]
-    # Note: "regolith" is held out as zero-shot test terrain
+    elif step < 150_000:
+        return ["flat", "sand", "ice", "rock", "regolith_mild"]
+    else:
+        return ["flat", "sand", "ice", "rock", "regolith_mild", "regolith"]
 
 
 def main():
@@ -224,8 +227,7 @@ def main():
     accum_count = 0
     t0 = time.time()
 
-    # Training loop: collect 1 episode → train train_ratio steps
-    max_steps = 100_000  # adjust for T4 session length
+    max_steps = 300_000  # adjust for T4 session length
 
     while global_step < max_steps:
 
