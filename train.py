@@ -227,7 +227,7 @@ def main():
     accum_count = 0
     t0 = time.time()
 
-    max_steps = 300_000  # adjust for T4 session length
+    max_steps = 100_000  # adjust for T4 session length
 
     while global_step < max_steps:
 
